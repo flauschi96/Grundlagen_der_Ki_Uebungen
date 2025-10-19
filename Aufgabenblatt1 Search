@@ -49,3 +49,135 @@ Nr.	Aktion	        Neues Ufer (L)	Neues Ufer (R)	Gültigkeit
 11	1E 1O nach	L   (0E 0O -)	    R(3E 3O P)      ZIEL ERREICHT!
 
 Aufgabe2 Suchverfahren (5P)
+Tiefensuche (neue vorne)
+Knoten    Offen        Besucht
+          wü
+wü        er fr nü     wü
+er        fr nü        wü er
+fr        ka ma nü     wu er fr
+ka        mü ma nü     wü er fr ka
+mü        ma nü        wü er fr ka mü
+Ziel gefunden!
+max einträge in Datenstruktur sind 3 weil maximal 3 offen waren
+es wurden 5 durchläufe gemacht (start zählt nicht)
+
+
+Breitensuche (neue hinten)
+Knoten    offen        Besucht
+          wü
+wü        er fr nü     wü
+er        fr nü        wü er
+fr        nü ka ma     wü er fr
+nü        ka ma mü st  wü er fr nü
+ka        ma mü st     wü er fr nü ka
+ma        mü st kar    wü er fr nü ka ma
+mü        st kar au    wü er fr nü ka ma
+Ziel Gefunden
+max einträge in Datenstruktur sind 4
+es wurde 7 durchläufe gemacht
+
+
+A* ("Tree - Search, keine Zyklen"):
+
+Kanten | g(n)
+-------|-----
+Würzburg-Nürnberg | 103
+Würzburg-Frankfurt | 217
+Würzburg-Erfurt | 186
+Frankfurt-Mannheim | 85
+Frankfurt-Kassel | 173
+Mannheim-Karlsruhe | 80
+Karlsruhe-Augsburg | 250
+Augsburg-München | 84
+Nürnberg-München | 167
+Nürnberg-Stuttgart | 183
+Kassel-München | 502
+
+Schätzungen der Restwegkosten für das Ziel München.
+Stadt | h(n)
+------|-----
+Augsburg | 0 km
+Erfurt | 400 km
+Frankfurt | 100 km
+Karlsruhe | 10 km
+Kassel | 460 km
+Mannheim | 200 km
+München | 0 km
+Nürnberg | 537 km
+Stuttgart | 300 km
+Würzburg | 170 km
+
+F(n) = g(n) + h(n)
+
+wü 0+170(geschätze) =170 ->luftlinie
+[wü-er 186 +400=586, wü-fr 217+100=317, wü-nü 103+537=640}                                                                            Günstigster weg ist wü-fr 317
+[wü-er 186 +400=586,wü-nü 103+537=640, wü-fr-ka 390+460=850, wü-fr-ma 302+200=502]                                                    Günstigster weg ist wü-fr-ma 502
+[wü-er 186 +400=586,wü-nü 103+537=640, wü-fr-ka 390+460=850,,wü-fr-ma-kar 382+10=392]                                                 Günstigster weg ist wü-fr-ma-kar 392
+[wü-er 186 +400=586,wü-nü 103+537=640, wü-fr-ka 390+460=850,wü-fr-ma-kar-au 632+0=632]                                                Günstigsters weg ist wü-er 586 -> keine weiteren knoten also 2 kleinster _> wü-fr-ma-kar-au632
+[wü-nü 103+537=640, wü-fr-ka 390+460=850,wü-fr-ma-kar-au-mü 716+0=716]                                                                Günstigster weg ist wu-nü 640
+[wü-nü-mü 270+0=270,wü-fr-ka 390+460=850,wü-fr-ma-kar-au-mu 716+0=716]                                                                Günstigster weg ist wu-nü-mü 270 ZIEL ERREICHT
+
+Bei der Auflistung habe ich Duplikate besuche vermieden
+2. Dürfen die oben gegebenen Restkostenabschätzungen in A* verwendet werden?
+Die angegebene Heuristik dar nicht für die A* Suche verwendet werden da gilt h(n) <= h*(n) außerdem kann die luftlinie zwischen Aufsburg und München nicht 0 km sein
+NürnbergSchätzung ist 537 und der tatsächliche weg ist aber nur 167 eine schätzung muss aber kleiner sein also z.b. 150
+
+Kanten g(n)
+Würzburg-Nürnberg 103
+Würzburg - Frankfurt 217
+Würzburg - Erfurt 186
+Frankfurt - Mannheim 85
+Frankfurt - Kassel 173
+Mannheim - Karlsruhe 80
+Karlsruhe - Augsburg 250
+Augsburg - München 84
+Nürnberg - München 167
+Nürnberg - Stuttgart 183
+Kassel - München 502
+
+Korrigierte Abschätzung
+Stadt h(n)
+München 0
+Augsburg 80
+Karlsruhe 300
+Mannheim 350
+Frankfurt 450
+Stuttgart 220
+Nürnberg 150
+Würzburg 230
+Kassel 450
+Erfurt 400
+
+wü 0+230=230
+[wü-er186+400=586, wu-fr 217+450=667,wü-nü 103+150=253] günstigstes ist wü-nü 253
+[wü-er186+400=586, wu-fr 217+450=667,wü-nü-mü 270+0=270] günstigste ist wü-nü-mü270 
+Ziel Erreicht bei Korrigierter Heuristik
+
+Aufgabe3 Dominanz
+Was bedeutet "Eine Heuristik h1(n) dominiert eine Heuristik h2(n)?
+Wenn für alle Knoten n gilt:
+h1(n) >= h2(n)
+Und beide zulässig sind
+Wenn h1 immer mindestens so große, nicht überschätzende Werte liefert wie h2, dann ist h1 eine bessere
+Schätzung der tatsächlichen Restkosten.
+So wie in der Aufgabe "Suche den kürzesten Weg von Würzburg nach München"
+Wir nehmen h2(n) = 0 für alle Städte -> Der Dijkstra Uniform Cost Search
+Bei dem A* alles expandieren wird, da die Heuristik nicht hilft.
+Für h1(n) nehmen wir die Werte aus der neuen Tabelle (Luftlinienentfernung. Geschätzter Weg etwas kleiner als
+echter Weg)
+Beide führen zum kürzesten Weg, aber h2(n) braucht mehr Durchläufe da erst alles expandiert werden muss
+
+A* wählt immer Knoten mit den kleinsten Kosten:
+f(n) = g(n) + h(n)
+g(n) = bisherige Kosten vom Start bis zu aktuellem Knoten
+h(n) = geschätzte Restkosten bis zum Ziel
+Wenn h zulässig ist dann ist h(n) nie zu groß, unterschätzt höchstens den Rückweg
+A* durchsucht alle Wege in Reihenfolge von f(n)
+Jeder Knoten auf dem optimalen Pfad hat einen f – Wert, der nicht größer ist als die tatsächlichen
+optimalen Gesamtkosten.
+f(n) <= optimale Kosten
+Wenn A* ziel erreicht, Preis = C
+Annahme C -> nicht günstigster Preis, also irgendwo gibt es einen günstigeren Weg C*,
+Aber dann müsste noch ein Knoten in der Warteschlange liegen damit C* günstiger sein kann.
+Aber A* wählt immer den günstigsten Weg zuerst also kann kein Knoten mehr in der Warteschlange liegen
+Wiederspruch!
