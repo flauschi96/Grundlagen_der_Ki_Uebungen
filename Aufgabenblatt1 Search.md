@@ -47,3 +47,5 @@ Nr.	Aktion	        Neues Ufer (L)	Neues Ufer (R)	Gültigkeit
 9	2O nach R	    L(0E 1O -)	    R(3E 2O P)      OK
 10	1E nach L	    L(1E 1O P)	    R(2E 2O -)      OK
 11	1E 1O nach	L   (0E 0O -)	    R(3E 3O P)      ZIEL ERREICHT!
+
+Aufgabe2 Suchverfahren (5P)
