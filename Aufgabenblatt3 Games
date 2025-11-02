@@ -108,3 +108,12 @@ aber in diesem Beispiel hat O noch viele freie Linien. (Anmerkung: Die X1​/O1�
     Priorisiert die Gefahr ($X_2$ und $O_2$): Die 2er-Reihen ($X_2, O_2$), welche die unmittelbarste Siegchance oder -drohung darstellen, werden mit dem Faktor 3 am stärksten gewichtet. Dies spiegelt wider, dass diese Züge die größte taktische Bedeutung haben.
     Berücksichtigt Potenzial ($X_1$ und $O_1$): Die 1er-Reihen ($X_1, O_1$) werden mit dem Faktor 1 niedriger gewichtet. Sie zeigen das langfristige Potenzial und die Anzahl der noch offenen Gewinnmöglichkeiten an.
     Spiegelt Nullsummenspiel wider: Die Berechnung als Differenz (Vorteil MAX minus Vorteil MIN) gewährleistet, dass der Wert des Zustandes aus Sicht des Maximierers korrekt als heuristische Schätzung für den unbekannten Endwert dient.
+
+
+
+Aufgabe 5
+
+Blätter (gegeben, von links nach rechts)
+(1,2,3), (4,2,1)∣(6,1,2), (7,4,−1)∣(5,1,−1), (−1,5,2)∣(7,7,−1), (5,4,5)
+
+​
