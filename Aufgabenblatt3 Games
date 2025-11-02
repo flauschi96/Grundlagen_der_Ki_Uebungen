@@ -61,3 +61,31 @@ C (MIN): Kinder in der Reihenfolge F, G, E (Minimax-Werte 2, 6, 9).
 
 D (MIN): Blätter in der Reihenfolge 1, 2, 3.
 
+Aufgabe 3
+Blattknoten,"Wert (aus Sicht desjenigen, der im Endzustand am Zug wäre)"
+A,5
+B,2
+C,6
+D,10
+
+A) Bewertung durch den Minimax-Algorithmus
+Hier werden die Spieler explizit unterschieden (MAX wählt Max, MIN wählt Min):
+Knoten,Spielertyp,Kindknoten (Werte),Minimax-Wert
+I,MIN,"A(5),B(2)","min(5,2)=2"
+II,MIN,"C(6),D(10)","min(6,10)=6"
+W,MAX,"I(2),II(6)","max(2,6)=6"
+
+Minimax-Ergebnis an der Wurzel (W): 6
+
+B) Bewertung durch den vereinfachten Negamax-Algorithmus
+Die Bewertung erfolgt immer aus der Sicht des aktuellen Spielers. Der Wert des Nachfolgers wird negiert.
+
+Knoten,Sichtweise (Spieler am Zug),        Berechnung,                    Negamax-Wert
+A,      Endzustand,                              −,                            5
+B,      Endzustand,                              −,                            2
+C,      Endzustand,                              −,                            6
+D,      Endzustand,                              −,                            10
+I,      Spieler von I,              "max(−A,−B)=max(−5,−2)=−2",               −2
+II,     Spieler von II,             "max(−C,−D)=max(−6,−10)=−6",               −6
+W,      Spieler von W,              "max(−I,−II)=max(−(−2),−(−6))=max(2,6)=6" ,6
+
