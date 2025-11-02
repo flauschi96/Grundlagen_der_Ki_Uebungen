@@ -1,4 +1,6 @@
 Games.01: Handsimulation: Minimax und alpha-beta-Pruning (3P)
+
+(1P) Geben Sie für den Spielbaum die Minimax-Bewertungen an.
 Knoten,Spielertyp,Kindknoten (Werte),Minimax-Bewertung
 B,MIN,"8,7,3","min(8,7,3)=3"
 E,MAX,"9,1,6","max(9,1,6)=9"
@@ -7,3 +9,55 @@ G,MAX,"1,6,5","max(1,6,5)=6"
 C,MIN,"E(9),F(2),G(6)","min(9,2,6)=2"
 D,MIN,"2,1,3","min(2,1,3)=1"
 A,MAX,"B(3),C(2),D(1)","max(3,2,1)=3"
+
+(1P) Markieren Sie die Kanten, die bei alpha-beta-Pruning nicht mehr untersucht werden würden, d.h. wo Pruning stattfinden würde. Geben Sie für jeden Knoten die (sich ändernden) 
+α
+- und 
+β
+-Werte an.
+Knoten,Aktion,α-Wert,β-Wert,Pruning?
+A (MAX),Start,−∞,+∞,Nein
+→ B (MIN),Ruft auf,α bleibt −∞,β bleibt +∞,Nein
+→Blatt 8,Wert 8 gefunden,−∞,+∞,Nein
+B (MIN),"β=min(∞,8)=8",−∞,8,Nein
+→Blatt 7,Wert 7 gefunden,−∞,8,Nein
+B (MIN),"β=min(8,7)=7",−∞,7,Nein
+→Blatt 3,Wert 3 gefunden,−∞,7,Nein
+B (MIN),"Rückgabe: 3 β=min(7,3)=3",−∞,3,Nein
+A (MAX),"α=max(−∞,3)=3",3,+∞,Nein
+→ C (MIN),Ruft auf,α bleibt 3,β bleibt +∞,Nein
+→ E (MAX),Ruft auf,α bleibt 3,β bleibt +∞,Nein
+→Blatt 9,Wert 9 gefunden,3,+∞,Nein
+E (MAX),"α=max(3,9)=9",9,+∞,Pruning-Check: α≥β? 9≥∞? Nein.
+→Blatt 1,Wert 1 gefunden,9,+∞,Nein
+E (MAX),"α=max(9,1)=9",9,+∞,Nein
+→Blatt 6,Wert 6 gefunden,9,+∞,Nein
+E (MAX),"Rückgabe: 9 α=max(9,6)=9",9,+∞,Nein
+C (MIN),"β=min(∞,9)=9",3,9,Pruning-Check: β≤α? 9≤3? Nein.
+→ F (MAX),Ruft auf,α bleibt 3,β bleibt 9,Nein
+→Blatt 2,Wert 2 gefunden,3,9,Nein
+F (MAX),"α=max(3,2)=3",3,9,Nein
+→Blatt 1,Wert 1 gefunden,3,9,Nein
+F (MAX),"Rückgabe: 3 α=max(3,1)=3",3,9,Nein
+C (MIN),"β=min(9,3)=3",3,3,Pruning-Check: β≤α? 3≤3? JA!
+→ G (MAX),Wird nicht untersucht.,3,3,PRUNING (Cut-off)
+C (MIN),Rückgabe: 3,3,3,Nein
+A (MAX),"α=max(3,3)=3",3,+∞,Nein
+→ D (MIN),Ruft auf,α bleibt 3,β bleibt +∞,Nein
+→Blatt 2,Wert 2 gefunden,3,+∞,Nein
+D (MIN),"β=min(∞,2)=2",3,2,Pruning-Check: β≤α? 2≤3? JA!
+→Blatt 1,Wird nicht untersucht.,3,2,PRUNING (Cut-off)
+→Blatt 3,Wird nicht untersucht.,3,2,PRUNING (Cut-off)
+D (MIN),Rückgabe: 2,3,2,Nein
+A (MAX),"α=max(3,2)=3",3,+∞,Nein
+(1P) Können die Knoten derart geordnet werden, dass alpha-beta-Pruning eine größere Anzahl von Zweigen abschneidet? Wenn ja, geben Sie eine solche Ordnung an. Wenn nein, begründen Sie Ihre Antwort.
+Ja  es ist Möglich Mehr Abzuschneiden aber in Diesem Konkreten fall bleibt es bei optimaler Ordnung bei 2 Cutoffs mit Pruning
+Außer wir wollen einfach nur unnötig äste schneiden dann wäre die beste reihenfolge:
+Optimale Ordnung für mehr Cut-offs bei C:
+
+B (MIN): Blätter in der Reihenfolge 3, 7, 8.
+
+C (MIN): Kinder in der Reihenfolge F, G, E (Minimax-Werte 2, 6, 9).
+
+D (MIN): Blätter in der Reihenfolge 1, 2, 3.
+
